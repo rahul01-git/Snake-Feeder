@@ -94,7 +94,51 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        timer.restart();
+        if(right){
+            for (int n = snakeLength-1; n>=0;n--){
+                snakeYlength[n+1] = snakeYlength[n];
+            }
+            for(int n = snakeLength; n>=0; n--){
+                if(n==0) snakeXlength[n] = snakeXlength[n] + 25;
+                else snakeXlength[n] = snakeXlength[n-1];
+                if(snakeXlength[n] > 850) snakeXlength[n] = 25;
+            }
+            repaint();
+        }
+        if(left){
+            for (int n = snakeLength-1; n>=0;n--){
+                snakeYlength[n+1] = snakeYlength[n];
+            }
+            for(int n = snakeLength; n>=0; n--){
+                if(n==0) snakeXlength[n] = snakeXlength[n] - 25;
+                else snakeXlength[n] = snakeXlength[n-1];
+                if(snakeXlength[n] < 25) snakeXlength[n] = 850;
+            }
+            repaint();
+        }
+        if(up){
+            for (int n = snakeLength-1; n>=0;n--){
+                snakeXlength[n+1] = snakeXlength[n];
+            }
+            for(int n = snakeLength; n>=0; n--){
+                if(n==0) snakeYlength[n] = snakeYlength[n] - 25;
+                else snakeYlength[n] = snakeYlength[n-1];
+                if(snakeYlength[n] < 75) snakeYlength[n] = 625;
+            }
+            repaint();
+        }
+        if(down){
+            for (int n = snakeLength-1; n>=0;n--){
+                snakeXlength[n+1] = snakeXlength[n];
+            }
+            for(int n = snakeLength; n>=0; n--){
+                if(n==0) snakeYlength[n] = snakeYlength[n] + 25;
+                else snakeYlength[n] = snakeYlength[n-1];
+                if(snakeYlength[n] > 625) snakeYlength[n] = 75;
+            }
+            repaint();
+        }
     }
 
     @Override
@@ -104,6 +148,49 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
+        if(e.getKeyCode() == KeyEvent.VK_RIGHT){
+            moves++;
+            right = true;
+            if(left){
+                right = false;
+                left = true;
+            }else right = true;
+
+            up = false;
+            down = false;
+        }
+        if(e.getKeyCode() == KeyEvent.VK_LEFT){
+            moves++;
+            left = true;
+            if(right){
+                left = false;
+                right = true;
+            }else left = true;
+
+            up = false;
+            down = false;
+        }
+        if(e.getKeyCode() == KeyEvent.VK_UP){
+            moves++;
+            up = true;
+            if(down){
+                up = false;
+                down = true;
+            }else up = true;
+
+            left = false;
+            right = false;
+        } if(e.getKeyCode() == KeyEvent.VK_DOWN){
+            moves++;
+            down = true;
+            if(up){
+                down = false;
+                up = true;
+            }else down = true;
+
+            left = false;
+            right = false;
+        }
     }
 
     @Override
