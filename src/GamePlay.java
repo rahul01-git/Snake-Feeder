@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Random;
 
 public class GamePlay extends JPanel implements KeyListener, ActionListener {
     private int[] snakeXlength = new int[750];
@@ -26,6 +27,14 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
     private int delay = 100;
     private int moves = 0;
     private int score = 0;
+
+    //fruit params
+    private int[] fruitXpos = {25,50,75,100,125,150,175,200,225,250,275,300,325,350,375,400,425,450,475,500,525,550,575,600,625,650,675,700,725,750,775,800,825,850};
+    private int[] fruitYpos = {75,100,125,150,175,200,225,250,275,300,325,350,375,400,425,450,475,500,525,550,575,600,625};
+    private ImageIcon fruitImage;
+    private Random random = new Random();
+    private int xpos = random.nextInt(fruitXpos.length);
+    private int ypos = random.nextInt(fruitYpos.length);
 
     public GamePlay(){
         addKeyListener(this);
@@ -86,6 +95,17 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
                 tail = new ImageIcon("tail.png");
                 tail.paintIcon(this,g,snakeXlength[i],snakeYlength[i]);
             }
+
+
+            //for fruit
+            fruitImage = new ImageIcon("fruit.png");
+            if(fruitXpos[xpos] == snakeXlength[0] && fruitYpos[ypos]==snakeYlength[0]){
+                score+=5;
+                snakeLength++;
+                xpos = random.nextInt(fruitXpos.length);
+                ypos = random.nextInt(fruitYpos.length);
+            }
+            fruitImage.paintIcon(this,g,fruitXpos[xpos], fruitYpos[ypos]);
         }
 
         g.dispose();
