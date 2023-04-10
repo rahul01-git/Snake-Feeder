@@ -70,6 +70,13 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
         g.setColor(Color.black);
         g.fillRect(25,75,851,577);
 
+        //display score and length
+        g.setColor(Color.white);
+        g.setFont(new Font("Roboto",Font.PLAIN,14));
+        g.drawString("Score: " + score,780,35);
+
+        g.drawString("Length:" + snakeLength,780,55);
+
         //initial position of image
         headRight = new ImageIcon("headRight.png");
         headRight.paintIcon(this,g,snakeXlength[0],snakeYlength[0]);
@@ -106,6 +113,24 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
                 ypos = random.nextInt(fruitYpos.length);
             }
             fruitImage.paintIcon(this,g,fruitXpos[xpos], fruitYpos[ypos]);
+        }
+
+        for(int i = 1;i<snakeLength;i++){
+            if(snakeXlength[i] == snakeXlength[0]  && snakeYlength[i] == snakeYlength[0]){
+                right = false;
+                left = false;
+                up = false;
+                down = false;
+
+                g.setColor(Color.red);
+                g.setFont(new Font("Roboto",Font.BOLD,40));
+                g.drawString("Game Over! Score:" + score,250,300);
+
+                g.setColor(Color.white);
+                g.setFont(new Font("Roboto",Font.BOLD,20));
+                g.drawString("Press Enter to Restart",350,340);
+
+            }
         }
 
         g.dispose();
@@ -168,6 +193,13 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
+
+        if(e.getKeyCode() == KeyEvent.VK_ENTER){
+            score = 0;
+            snakeLength = 3;
+            moves = 0;
+            repaint();
+        }
         if(e.getKeyCode() == KeyEvent.VK_RIGHT){
             moves++;
             right = true;
@@ -211,6 +243,7 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
             left = false;
             right = false;
         }
+
     }
 
     @Override
